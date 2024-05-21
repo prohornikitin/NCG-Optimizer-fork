@@ -72,7 +72,7 @@ class BASIC(Optimizer):
         lr = 1,
         rho = 0.5,
         max_ls = 10,
-    ):
+    ):        
         if eps < 0.0:
             raise ValueError('Invalid epsilon value: {}'.format(eps))
 
@@ -180,8 +180,7 @@ class BASIC(Optimizer):
                 lr = group['lr']
                 rho = group['rho']
                 max_ls = group['max_ls']
-
-                if len(state) == 0:
+                if len(state) == 0 or ('d' not in state) or ('g' not in state):
                     # Grade of quadratic functions
                     state['g'] = copy.deepcopy(d_p.data)
 
