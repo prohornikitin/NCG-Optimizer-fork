@@ -77,6 +77,7 @@ class BASIC(Optimizer):
             raise ValueError('Invalid epsilon value: {}'.format(eps))
 
         if method not in [
+            'SGD',
             'FR',
             'PRP', 
             'HS',
@@ -201,7 +202,10 @@ class BASIC(Optimizer):
                     state['alpha'] = lr
                 else:
                     # Parameters that make gradient steps
-                    if method == 'FR':
+                    if method == 'SGD':
+                        state['beta'] = torch.zeros_like(state['g'])
+                    
+                    elif method == 'FR':
                         state['beta'] = torch.norm(d_p.data) / torch.norm(state['g'])
                     
                     elif method == 'PRP':
